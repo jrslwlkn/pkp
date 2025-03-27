@@ -1,10 +1,10 @@
 #!/opt/homebrew/bin/bash
 
-REFRESH_RATE=$(( 10*60 ))               # how often this runs in seconds
+REFRESH_INTERVAL=10                     # how often this runs in seconds
 CPU_THRESHOLD=95                        # sustained CPU usage percentage
-OFFENCE_DURATION=$(( 30*60 ))           # sustained time over CPU threshold in seconds
+OFFENCE_DURATION=$(( 10*60 ))           # sustained time over CPU threshold in seconds
 
-offence_threshold=$(( OFFENCE_DURATION / REFRESH_RATE ))
+offence_threshold=$(( OFFENCE_DURATION / REFRESH_INTERVAL ))
 declare -A stats
 declare -A excluded=(
   ["WindowServer"]=1
@@ -68,13 +68,13 @@ while true; do
     done
     echo "@ $now clearing stats ${#stats[@]}"
   fi
-  if (( now % (( REFRESH_RATE * 12 )) == 0 )); then
+  if (( now % (( REFRESH_INTERVAL * 12 )) == 0 )); then
     for key in "${!popup_q[@]}"; do
       unset popup_q["$key"]
     done
     echo "@ $now clearing popup queue ${#popup_q[@]}"
   fi
 
-  sleep "$REFRESH_RATE"
+  sleep "$REFRESH_INTERVAL"
 done
 
