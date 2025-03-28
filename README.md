@@ -25,5 +25,6 @@ Same as above but in reverse.
 ```bash
 sudo launchctl bootout system /Library/LaunchDaemons/com.jrslwlkn.pkp.plist
 sudo rm /Library/LaunchDaemons/com.jrslwlkn.pkp.plist /usr/local/bin/pkp.sh
+sudo rm /var/log/pkp.log
 ```
 

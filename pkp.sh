@@ -66,13 +66,16 @@ while true; do
     for key in "${!stats[@]}"; do
       unset stats["$key"]
     done
-    echo "@ $now clearing stats ${#stats[@]}"
+    echo "@ $now cleared stats ${#stats[@]}"
   fi
   if (( now % (( REFRESH_INTERVAL * 12 )) == 0 )); then
     for key in "${!popup_q[@]}"; do
       unset popup_q["$key"]
     done
-    echo "@ $now clearing popup queue ${#popup_q[@]}"
+    echo "@ $now cleared popup queue ${#popup_q[@]}"
+
+    tail -n 420 /var/log/pkp.log > /tmp/pkp.tmp && mv /tmp/pkp.tmp /var/log/pkp.log
+    echo "@ $now trimming logs"
   fi
 
   sleep "$REFRESH_INTERVAL"
